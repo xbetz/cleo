@@ -1,0 +1,20 @@
+<ion-view view-title="Playlists">
+  <ion-content>
+    <ion-list>
+      <a ng-click="searchMenu='app'" href="">App</a>
+       <a ng-click="searchMenu='main'" href="">Main</a>
+        <a ng-click="searchMenu='des'" href="">Des</a>
+        <a ng-click="searchMenu=''" href="">All</a>
+    	<label class="item item-input">
+		    <i class="icon ion-search placeholder-icon"></i>
+		    <input type="text" ng-model="searchMenu" placeholder="Search">
+	  	</label>
+      <ion-item class="item item-thumbnail-left" ng-repeat="menulist in menulists | filter:searchMenu" href="#/app/menulists/{{menulist.id}}">
+        	<img ng-src="{{menulist.src}}"/>
+	      	<h2>{{menulist.title}}</h2>
+	      	<p>{{menuist.desc}}</p>
+          <i class="icon ion-social-euro"></i> {{menulist.price}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
