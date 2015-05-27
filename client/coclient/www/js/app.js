@@ -4,9 +4,13 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
 
-.run(function($ionicPlatform) {
+//Initiate Firebase Instance
+var fb = new Firebase("https://cleo.firebaseio.com/");
+
+var cleoMod = angular.module('starter', ['ionic', 'starter.controllers','ngCordova','firebase']);
+
+cleoMod.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -18,64 +22,78 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       StatusBar.styleDefault();
     }
   });
-})
 
-.config(function($stateProvider, $urlRouterProvider) {
+
+
+});
+
+cleoMod.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-  .state('app', {
-    url: "/app",
-    abstract: true,
-    templateUrl: "templates/menu.html",
-    controller: 'AppCtrl'
+  .state('register', {
+    url: "/register",
+    templateUrl: "templates/register.html",
+    controller: 'RegisterCtrl'
   })
 
-  .state('app.search', {
-    url: "/search",
+  .state('register.lists', {
+    url: '/lists',
     views: {
-      'menuContent': {
-        templateUrl: "templates/search.html"
+     'lists-tab': {
+        templateUrl: 'templates/lists.html',
+        controller: 'ListsTabCtrl'
       }
     }
   })
 
-  .state('app.browse', {
-    url: "/browse",
+  .state('register.key', {
+    url: '/key',
     views: {
-      'menuContent': {
-        templateUrl: "templates/browse.html"
+      'key-tab': {
+        templateUrl: 'templates/key.html',
+        controller: 'KeyTabCtrl'
       }
     }
   })
-    .state('app.menulists', {
-      url: "/menulists",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/menulists.html",
-          controller: 'MenulistsCtrl'
-        }
-      }
-    })
 
-  .state('app.menucat', {
-      url: "/menulists/:menucat",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/menulists.html",
-          controller: 'MenucatCtrl'
-        }
-      }
-    })
+  .state('items', {
+    url: "/items",
+    templateUrl: "templates/items.html",
+    controller: 'ItemCtrl'
+  })
 
-  .state('app.single', {
-    url: "/menulists/:menulistId",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/menulist.html",
-        controller: 'MenulistCtrl'
-      }
-    }
+  .state('items.manage', {
+    url: "/manage",
+    templateUrl: "templates/itemsmanage.html",
+    controller: 'ItemManCtrl'
+  })
+
+  .state('items.cat', {
+    url: "/cat",
+    templateUrl: "templates/itemscategory.html",
+    controller: 'ItemCatCtrl'
+  })
+
+      
+  .state('accounts', {
+    url: '/accounts',
+    controller: 'AccCtrl',
+    templateUrl: 'templates/account.html'
+  })
+
+  .state('report', {
+    url: '/report',
+    controller: 'ReportCtrl',
+    templateUrl: 'templates/report.html'
+  })
+
+  .state('settings', {
+    url: '/settings',
+    controller: 'SettingsCtrl',
+    templateUrl: 'templates/settings.html'
   });
+
+  
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/menulists');
+  $urlRouterProvider.otherwise('/register');
 });
